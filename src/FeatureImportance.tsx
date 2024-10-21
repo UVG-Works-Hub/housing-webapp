@@ -169,7 +169,7 @@ export function FeatureImportance() {
     return colorMap[feature] || 'hsl(180, 70%, 50%)'
   }
 
-  const handleBarClick = (data: FeatureDetail, index: number) => {
+  const handleBarClick = (data: FeatureDetail) => {
     setSelectedFeature(data)
     setIsOpen(true)
   }
@@ -211,10 +211,10 @@ export function FeatureImportance() {
             <BarChart
               data={featureImportance}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-              onClick={(data, index) => {
+              onClick={(_data, index) => {
                 if (index && index.activeLabel) {
                   const feature = featureImportance[index.index]
-                  handleBarClick(feature, index.index)
+                  handleBarClick(feature)
                 }
               }}
             >
@@ -232,7 +232,7 @@ export function FeatureImportance() {
                 tick={{ fontSize: 12 }}
               />
               <Tooltip
-                content={({ active, payload, label }) => {
+                content={({ active, payload}) => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload as FeatureDetail
                     return (
@@ -249,17 +249,16 @@ export function FeatureImportance() {
               <Bar
                 dataKey="importance"
                 fill="#8884d8"
-                onClick={(data, index) => {
-                  const feature = featureImportance[index.index]
-                  handleBarClick(feature, index.index)
+                onClick={(_data, index) => {
+                  const feature = featureImportance[index]
+                  handleBarClick(feature)
                 }}
               >
                 {
                   featureImportance.map((entry, index) => (
                     <Rectangle
                       key={`cell-${index}`}
-                      fill={entry.fill}
-                      onClick={() => handleBarClick(entry, index)}
+                      onClick={() => handleBarClick(entry)}
                       cursor="pointer"
                     />
                   ))

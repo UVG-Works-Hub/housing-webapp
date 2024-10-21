@@ -152,7 +152,7 @@ export function RentalTrends() {
                 tick={{ fontSize: 12 }}
               />
               <Tooltip
-                content={({ active, payload, label }) => {
+                content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     const data = payload[0].payload as RentalTrendDetail
                     return (
