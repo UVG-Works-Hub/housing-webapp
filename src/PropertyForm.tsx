@@ -29,6 +29,7 @@ export interface PropertyData {
 
 interface PropertyFormProps {
   onSubmit: (data: PropertyData) => void
+  disabled: boolean
 }
 
 interface FormErrors {
@@ -37,7 +38,9 @@ interface FormErrors {
 
 const cityOptions = ['São Paulo', 'Porto Alegre', 'Rio de Janeiro', 'Campinas', 'Belo Horizonte']
 
-export function PropertyForm({ onSubmit }: PropertyFormProps) {
+export function PropertyForm({ onSubmit,
+  disabled
+ }: PropertyFormProps) {
   const [formData, setFormData] = useState({
     city: '',
     allows_animals: false,
@@ -241,7 +244,13 @@ export function PropertyForm({ onSubmit }: PropertyFormProps) {
       </div>
 
       {/* Botón de Envío */}
-      <Button type="submit" className="w-full">Predict Rental Price</Button>
+      {
+        disabled ? (
+          <Button className='w-full' disabled>Loading prediction...</Button>
+        ) : (
+          <Button type="submit" className="w-full">Predict Rental Price</Button>
+        )
+      }
     </form>
   )
 }
